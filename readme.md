@@ -12,6 +12,24 @@
 | CNN + LSTM + HW | 0.000607791225775145  |
 | CNN + LSTM + CBAM | 0.00033038058675381103  |
 
+# train
+```python
+python train.py -m Base
+python train.py -m SE
+python train.py -m HW
+python train.py -m CBAM
+```
+模型会存在best_model路径下
+
+# test
+```python
+python test.py -m Base
+python test.py -m SE
+python test.py -m HW
+python test.py -m CBAM
+```
+预测结果会存在result_picture下
+
 # 预测结果
 
 ## CNN + LSTM
