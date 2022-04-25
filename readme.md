@@ -1,6 +1,7 @@
 # CNN LSTM Attention 股价预测
 
 - CNN + LSTM
+- CNN + LSTM + ECA(attention)
 - CNN + LSTM + SE(attention)
 - CNN + LSTM + HW(attention)
 - CNN + LSTM + CBAM(attention)
@@ -16,6 +17,7 @@
 # train
 ```python
 python train.py -m Base
+python train.py -m ECA
 python train.py -m SE
 python train.py -m HW
 python train.py -m CBAM
@@ -25,6 +27,7 @@ python train.py -m CBAM
 # test
 ```python
 python test.py -m Base
+python test.py -m ECA
 python test.py -m SE
 python test.py -m HW
 python test.py -m CBAM
