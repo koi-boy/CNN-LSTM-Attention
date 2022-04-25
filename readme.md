@@ -5,12 +5,13 @@
 - CNN + LSTM + HW(attention)
 - CNN + LSTM + CBAM(attention)
 
-| 模型  | RMSE |
-|-----|------|
-| CNN + LSTM | 0.0002811193857765333  |
-| CNN + LSTM + SE | 0.0001978238473053683  |
-| CNN + LSTM + HW | 0.000607791225775145  |
-| CNN + LSTM + CBAM | 0.00033038058675381103  |
+| 模型                | RMSE                  |
+|-------------------|-----------------------|
+| CNN + LSTM        | 0.00011371035229372369 |
+| CNN + LSTM + ECA  | 0.0001245921911587092 |
+| CNN + LSTM + SE   | 0.00009550479312152179 |
+| CNN + LSTM + HW   | 0.00041322291971565306 |
+| CNN + LSTM + CBAM | 0.0003162174993617968 |
 
 # train
 ```python
@@ -34,6 +35,8 @@ python test.py -m CBAM
 
 ## CNN + LSTM
 ![CNN + LSTM](./result_picture/Base_fic.jpg)
+## CNN + LSTM + ECA
+![CNN + LSTM + ECA](./result_picture/ECA_fic.jpg)
 ## CNN + LSTM + SE
 ![CNN + LSTM + SE](./result_picture/SE_fic.jpg)
 ## CNN + LSTM + HW

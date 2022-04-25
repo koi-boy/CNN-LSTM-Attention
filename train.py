@@ -1,23 +1,19 @@
-import torch
 from dataloader import StockDataset
-from torch.utils.data import DataLoader 
+from torch.utils.data import DataLoader
 from model import *
 import torch.nn as nn
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 import os
 
 if not os.path.exists("result_picture"):
     os.makedirs("result_picture")
-    
+
 if not os.path.exists("best_model"):
     os.makedirs("best_model")
 
 
 def parse_args():
     import argparse
-    parser = argparse.ArgumentParser() 
+    parser = argparse.ArgumentParser()
     parser.add_argument("--model", "-m", help="which model", required=True)
     args = parser.parse_args()
     return args
@@ -33,8 +29,9 @@ train_loader = DataLoader(train_data, batch_size=256, shuffle=False, num_workers
 test_loader = DataLoader(test_data, batch_size=256, shuffle=False, num_workers=2)
 
 model_dict = {
-    "SE": CNNLSTMModel_SE,
     "Base": CNNLSTMModel,
+    "SE": CNNLSTMModel_SE,
+    "ECA": CNNLSTMModel_ECA,
     "CBAM": CNNLSTMModel_CBAM,
     "HW": CNNLSTMModel_HW
 }
@@ -47,7 +44,7 @@ criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 min_loss = 99999
-for epoch in range(30):
+for epoch in range(100):
     print(f'epoch:{epoch}')
     running_loss = 0.0
     for step, (data, label) in enumerate(train_loader):
@@ -56,7 +53,7 @@ for epoch in range(30):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        
+
         running_loss += loss.item()
         if step % print_step == 0:  # 每500个batch打印一次训练状态
             with torch.no_grad():
@@ -65,10 +62,10 @@ for epoch in range(30):
                     out = model(data)
                     loss = criterion(out, label)
                     mse_loss += loss.item()
-                if mse_loss/len(test_loader) < min_loss:
+                if mse_loss / len(test_loader) < min_loss:
                     torch.save(model.state_dict(), f"best_model/{args.model}_best.pth")
                     print("save_best")
-                    min_loss = mse_loss/len(test_loader)
-                print(f"step:{step}, test loss:{mse_loss/len(test_loader)}")
- 
+                    min_loss = mse_loss / len(test_loader)
+                print(f"step:{step}, test loss:{mse_loss / len(test_loader)}")
+
 print("done")
